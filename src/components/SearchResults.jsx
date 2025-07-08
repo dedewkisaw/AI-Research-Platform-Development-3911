@@ -9,12 +9,7 @@ const { FiSearch, FiFilter, FiDownload, FiBookmark, FiExternalLink, FiClock, FiT
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('q') || '');
-  const [filters, setFilters] = useState({
-    year: '',
-    journal: '',
-    author: '',
-    citations: ''
-  });
+  const [filters, setFilters] = useState({ year: '', journal: '', author: '', citations: '' });
 
   const mockResults = [
     {
@@ -56,7 +51,7 @@ const SearchResults = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 pt-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Search Header */}
         <motion.div
@@ -65,21 +60,25 @@ const SearchResults = () => {
           transition={{ duration: 0.8 }}
           className="mb-8"
         >
-          <div className="bg-white rounded-2xl shadow-neumorphic p-6">
-            <div className="flex items-center space-x-4">
-              <div className="flex-1 relative">
-                <SafeIcon icon={FiSearch} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search research papers..."
-                  className="w-full pl-12 pr-4 py-3 bg-gray-50 rounded-xl border-none outline-none text-gray-800 placeholder-gray-500"
-                />
+          <div className="relative bg-white/20 backdrop-blur-xl rounded-3xl p-6 shadow-neumorphic-ultra border border-white/30">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-purple-600/20 rounded-3xl blur-xl"></div>
+            
+            <div className="relative z-10">
+              <div className="flex items-center space-x-4">
+                <div className="flex-1 relative">
+                  <SafeIcon icon={FiSearch} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search research papers..."
+                    className="w-full pl-12 pr-4 py-4 bg-white/50 backdrop-blur-lg rounded-2xl border border-white/30 outline-none text-gray-800 placeholder-gray-500 font-medium shadow-neumorphic-sm"
+                  />
+                </div>
+                <button className="px-8 py-4 bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded-2xl shadow-neumorphic-deep hover:shadow-neumorphic-ultra transition-all duration-300 font-bold">
+                  Search
+                </button>
               </div>
-              <button className="px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl shadow-neumorphic hover:shadow-neumorphic-inset transition-all duration-300">
-                Search
-              </button>
             </div>
           </div>
         </motion.div>
@@ -92,48 +91,52 @@ const SearchResults = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:col-span-1"
           >
-            <div className="bg-white rounded-2xl shadow-neumorphic p-6 sticky top-24">
-              <h3 className="text-xl font-bold text-gray-800 mb-6 flex items-center space-x-2">
-                <SafeIcon icon={FiFilter} className="text-primary-500" />
-                <span>Filters</span>
-              </h3>
+            <div className="relative bg-white/20 backdrop-blur-xl rounded-3xl p-6 shadow-neumorphic-ultra border border-white/30 sticky top-24">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-3xl"></div>
               
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Publication Year</label>
-                  <select className="w-full p-3 bg-gray-50 rounded-xl border-none outline-none text-gray-800">
-                    <option>Any year</option>
-                    <option>2024</option>
-                    <option>2023</option>
-                    <option>2022</option>
-                    <option>2021</option>
-                  </select>
-                </div>
+              <div className="relative z-10">
+                <h3 className="text-xl font-black text-gray-800 mb-6 flex items-center space-x-2">
+                  <SafeIcon icon={FiFilter} className="text-primary-500" />
+                  <span>Filters</span>
+                </h3>
                 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Journal</label>
-                  <select className="w-full p-3 bg-gray-50 rounded-xl border-none outline-none text-gray-800">
-                    <option>Any journal</option>
-                    <option>Nature</option>
-                    <option>Science</option>
-                    <option>Cell</option>
-                    <option>PNAS</option>
-                  </select>
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Publication Year</label>
+                    <select className="w-full p-3 bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 outline-none text-gray-800 shadow-neumorphic-sm">
+                      <option>Any year</option>
+                      <option>2024</option>
+                      <option>2023</option>
+                      <option>2022</option>
+                      <option>2021</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Journal</label>
+                    <select className="w-full p-3 bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 outline-none text-gray-800 shadow-neumorphic-sm">
+                      <option>Any journal</option>
+                      <option>Nature</option>
+                      <option>Science</option>
+                      <option>Cell</option>
+                      <option>PNAS</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Citations</label>
+                    <select className="w-full p-3 bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 outline-none text-gray-800 shadow-neumorphic-sm">
+                      <option>Any citations</option>
+                      <option>100+</option>
+                      <option>50+</option>
+                      <option>10+</option>
+                    </select>
+                  </div>
+                  
+                  <button className="w-full py-3 bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded-xl shadow-neumorphic-deep hover:shadow-neumorphic-ultra transition-all duration-300 font-bold">
+                    Apply Filters
+                  </button>
                 </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Citations</label>
-                  <select className="w-full p-3 bg-gray-50 rounded-xl border-none outline-none text-gray-800">
-                    <option>Any citations</option>
-                    <option>100+</option>
-                    <option>50+</option>
-                    <option>10+</option>
-                  </select>
-                </div>
-                
-                <button className="w-full py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl shadow-neumorphic hover:shadow-neumorphic-inset transition-all duration-300">
-                  Apply Filters
-                </button>
               </div>
             </div>
           </motion.div>
@@ -146,114 +149,92 @@ const SearchResults = () => {
             className="lg:col-span-3"
           >
             <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">
+              <h2 className="text-2xl font-black text-gray-800">
                 Search Results for "{query}"
               </h2>
-              <p className="text-gray-600 mt-2">
+              <p className="text-gray-600 mt-2 font-medium">
                 Found {mockResults.length} papers • Analyzed in 0.23 seconds
               </p>
             </div>
 
             <div className="space-y-6">
               {mockResults.map((paper, index) => (
-                <motion.div
-                  key={paper.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.1 * index }}
-                  className="relative bg-white rounded-2xl shadow-neumorphic hover:shadow-neumorphic-lg transition-all duration-300 group"
-                >
-                  {/* Encrypted Text Grain Effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 overflow-hidden rounded-2xl">
-                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-700 animate-grain">
-                      <div className="text-xs font-mono leading-3 p-2 text-white/30">
-                        {Array.from({ length: 20 }, (_, i) => (
-                          <div key={i}>
-                            {Math.random().toString(36).substring(2, 15)}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="relative z-10 p-8">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <Link
-                          to={`/paper/${paper.id}`}
-                          className="text-xl font-bold text-gray-800 hover:text-primary-600 transition-colors duration-300 block mb-2"
-                        >
-                          {paper.title}
-                        </Link>
-                        <p className="text-gray-600 mb-2">
-                          {paper.authors.join(', ')}
-                        </p>
-                        <div className="flex items-center space-x-4 text-sm text-gray-500 mb-4">
-                          <span>{paper.journal}</span>
-                          <span>•</span>
-                          <span>{paper.year}</span>
-                          <span>•</span>
-                          <span className="flex items-center space-x-1">
-                            <SafeIcon icon={FiTrendingUp} className="text-xs" />
-                            <span>{paper.citations} citations</span>
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <button className="p-2 rounded-lg bg-gray-50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300">
-                          <SafeIcon icon={FiBookmark} className="text-lg" />
-                        </button>
-                        <button className="p-2 rounded-lg bg-gray-50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300">
-                          <SafeIcon icon={FiDownload} className="text-lg" />
-                        </button>
-                        <button className="p-2 rounded-lg bg-gray-50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300">
-                          <SafeIcon icon={FiExternalLink} className="text-lg" />
-                        </button>
-                      </div>
-                    </div>
-
-                    <p className="text-gray-700 mb-4 leading-relaxed">
-                      {paper.abstract}
-                    </p>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex flex-wrap gap-2">
-                        {paper.keywords.map((keyword, keyIndex) => (
-                          <span
-                            key={keyIndex}
-                            className="px-3 py-1 bg-primary-50 text-primary-600 rounded-full text-sm font-medium"
+                <div key={paper.id} className="relative group">
+                  <div className="relative bg-white/30 backdrop-blur-xl rounded-3xl shadow-neumorphic-ultra border border-white/40 hover:shadow-neumorphic-deep transition-all duration-300">
+                    <div className="relative z-10 p-8">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <Link
+                            to={`/paper/${paper.id}`}
+                            className="text-xl font-black text-gray-800 hover:text-primary-600 transition-colors duration-300 block mb-2"
                           >
-                            {keyword}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="flex items-center space-x-2 text-sm text-gray-500">
-                        <span>Relevance:</span>
-                        <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-primary-500 to-primary-600"
-                            style={{ width: `${paper.relevanceScore * 100}%` }}
-                          ></div>
+                            {paper.title}
+                          </Link>
+                          <p className="text-gray-600 mb-2 font-medium">
+                            {paper.authors.join(', ')}
+                          </p>
+                          <div className="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+                            <span className="font-bold">{paper.journal}</span>
+                            <span>•</span>
+                            <span>{paper.year}</span>
+                            <span>•</span>
+                            <span className="flex items-center space-x-1">
+                              <SafeIcon icon={FiTrendingUp} className="text-xs" />
+                              <span>{paper.citations} citations</span>
+                            </span>
+                          </div>
                         </div>
-                        <span>{Math.round(paper.relevanceScore * 100)}%</span>
+                        <div className="flex items-center space-x-2">
+                          <button className="p-2 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 shadow-neumorphic-sm">
+                            <SafeIcon icon={FiBookmark} className="text-lg" />
+                          </button>
+                          <button className="p-2 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 shadow-neumorphic-sm">
+                            <SafeIcon icon={FiDownload} className="text-lg" />
+                          </button>
+                          <button className="p-2 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 shadow-neumorphic-sm">
+                            <SafeIcon icon={FiExternalLink} className="text-lg" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <p className="text-gray-700 mb-4 leading-relaxed font-medium">
+                        {paper.abstract}
+                      </p>
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex flex-wrap gap-2">
+                          {paper.keywords.map((keyword, keyIndex) => (
+                            <span
+                              key={keyIndex}
+                              className="px-3 py-1 bg-primary-50 text-primary-600 rounded-full text-sm font-bold"
+                            >
+                              {keyword}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="flex items-center space-x-2 text-sm text-gray-500">
+                          <span className="font-bold">Relevance:</span>
+                          <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-gradient-to-r from-primary-500 to-purple-600"
+                              style={{ width: `${paper.relevanceScore * 100}%` }}
+                            ></div>
+                          </div>
+                          <span className="font-bold">{Math.round(paper.relevanceScore * 100)}%</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
             {/* Load More */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="text-center mt-12"
-            >
-              <button className="px-8 py-4 bg-white text-gray-700 rounded-xl shadow-neumorphic hover:shadow-neumorphic-inset transition-all duration-300 font-medium">
+            <div className="text-center mt-12">
+              <button className="px-8 py-4 bg-white/50 backdrop-blur-lg text-gray-700 rounded-2xl shadow-neumorphic-medium hover:shadow-neumorphic-deep transition-all duration-300 font-bold">
                 Load More Results
               </button>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>

@@ -58,8 +58,61 @@ const Features = () => {
   ];
 
   return (
-    <div className="py-24 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-24 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 relative overflow-hidden">
+      {/* Floating Orbs Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        {Array.from({ length: 6 }, (_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full opacity-20"
+            style={{
+              width: `${Math.random() * 150 + 80}px`,
+              height: `${Math.random() * 150 + 80}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              background: `conic-gradient(from ${i * 60}deg, #3b82f6, #8b5cf6, #10b981, #f59e0b)`,
+              filter: 'blur(30px)',
+            }}
+            animate={{
+              scale: [1, 1.3, 1],
+              rotate: [0, 360],
+              opacity: [0.1, 0.3, 0.1],
+            }}
+            transition={{
+              duration: 10 + Math.random() * 5,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Floating Particles */}
+      <div className="absolute inset-0">
+        {Array.from({ length: 30 }, (_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-primary-400 rounded-full opacity-30"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -80, 0],
+              x: [0, Math.random() * 60 - 30, 0],
+              opacity: [0.3, 0.7, 0.3],
+              scale: [1, 1.3, 1],
+            }}
+            transition={{
+              duration: 8 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -67,16 +120,21 @@ const Features = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-            Advanced Research
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700 block">
-              Features & Tools
-            </span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Comprehensive suite of AI-powered tools designed to optimize and enhance 
-            your research workflow from discovery to publication.
-          </p>
+          <div className="relative bg-white/10 backdrop-blur-lg rounded-3xl p-8 shadow-neumorphic-ultra border border-white/20">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-purple-600/20 rounded-3xl blur-xl"></div>
+            
+            <div className="relative z-10">
+              <h2 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-800 via-primary-600 to-purple-600 mb-6">
+                Advanced Research
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-primary-500 to-blue-600">
+                  Features & Tools
+                </span>
+              </h2>
+              <p className="text-xl text-gray-700 max-w-3xl mx-auto font-medium">
+                Comprehensive suite of AI-powered tools designed to optimize and enhance your research workflow from discovery to publication.
+              </p>
+            </div>
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -87,17 +145,19 @@ const Features = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, rotateY: 5 }}
               className="relative group"
             >
-              <div className="bg-white rounded-2xl p-8 shadow-neumorphic hover:shadow-neumorphic-lg transition-all duration-300 h-full">
-                {/* Encrypted Text Grain Effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 overflow-hidden rounded-2xl">
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-700 animate-grain">
+              {/* Holographic Glow */}
+              <div className={`absolute inset-0 bg-gradient-to-r ${feature.gradient} rounded-3xl blur-xl opacity-30 group-hover:opacity-60 transition-all duration-500`}></div>
+              
+              <div className="relative bg-white/30 backdrop-blur-xl rounded-3xl p-8 shadow-neumorphic-ultra border border-white/40 h-full">
+                {/* Quantum Grain Effect */}
+                <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500 overflow-hidden rounded-3xl">
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-700 animate-grain-quantum">
                     <div className="text-xs font-mono leading-3 p-2 text-white/30">
                       {Array.from({ length: 15 }, (_, i) => (
                         <div key={i}>
-                          {Math.random().toString(36).substring(2, 12)}
                           {Math.random().toString(36).substring(2, 12)}
                         </div>
                       ))}
@@ -106,7 +166,7 @@ const Features = () => {
                 </div>
 
                 <div className="relative z-10">
-                  <div className={`w-16 h-16 bg-gradient-to-r ${feature.gradient} rounded-2xl shadow-neumorphic flex items-center justify-center mb-6 group-hover:shadow-neumorphic-inset transition-all duration-300`}>
+                  <div className={`w-16 h-16 bg-gradient-to-r ${feature.gradient} rounded-2xl shadow-neumorphic-deep flex items-center justify-center mb-6 group-hover:shadow-neumorphic-ultra transition-all duration-300`}>
                     <SafeIcon icon={feature.icon} className="text-white text-2xl" />
                   </div>
                   
@@ -131,17 +191,25 @@ const Features = () => {
           viewport={{ once: true }}
           className="text-center mt-20"
         >
-          <div className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-3xl p-12 shadow-neumorphic-lg">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Ready to Transform Your Research?
-            </h3>
-            <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-              Join thousands of researchers, academics, and professionals who are already 
-              accelerating their research with our AI-powered platform.
-            </p>
-            <button className="bg-white text-primary-600 px-8 py-4 rounded-xl font-bold text-lg shadow-neumorphic hover:shadow-neumorphic-inset transition-all duration-300">
-              Start Free Trial
-            </button>
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur-xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 animate-pulse"></div>
+            
+            <div className="relative bg-white/20 backdrop-blur-xl rounded-3xl p-12 shadow-neumorphic-ultra border border-white/30">
+              <h3 className="text-3xl md:text-4xl font-black text-gray-800 mb-6">
+                Ready to Transform Your Research?
+              </h3>
+              <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto font-medium">
+                Join thousands of researchers, academics, and professionals who are already accelerating their research with our AI-powered platform.
+              </p>
+              
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 text-white px-12 py-4 rounded-2xl font-black text-lg shadow-neumorphic-deep hover:shadow-neumorphic-ultra transition-all duration-300"
+              >
+                Start Free Trial
+              </motion.button>
+            </div>
           </div>
         </motion.div>
       </div>

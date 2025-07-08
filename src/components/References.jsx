@@ -52,10 +52,10 @@ const References = () => {
   ];
 
   const folders = [
-    { name: 'AI in Healthcare', count: 12, color: 'bg-blue-500' },
-    { name: 'Quantum Computing', count: 8, color: 'bg-purple-500' },
-    { name: 'Environmental Studies', count: 15, color: 'bg-green-500' },
-    { name: 'Machine Learning', count: 23, color: 'bg-orange-500' }
+    { name: 'AI in Healthcare', count: 12, color: 'from-blue-500 to-cyan-500' },
+    { name: 'Quantum Computing', count: 8, color: 'from-purple-500 to-pink-500' },
+    { name: 'Environmental Studies', count: 15, color: 'from-green-500 to-emerald-500' },
+    { name: 'Machine Learning', count: 23, color: 'from-orange-500 to-red-500' }
   ];
 
   const tabs = [
@@ -66,7 +66,7 @@ const References = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 pt-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -75,40 +75,46 @@ const References = () => {
           transition={{ duration: 0.8 }}
           className="mb-8"
         >
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-4xl font-bold text-gray-800 mb-2">Reference Manager</h1>
-              <p className="text-xl text-gray-600">Organize and manage your research references</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <button className="px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl shadow-neumorphic hover:shadow-neumorphic-inset transition-all duration-300 flex items-center space-x-2">
-                <SafeIcon icon={FiPlus} className="text-lg" />
-                <span>Add Reference</span>
-              </button>
-              <button className="px-6 py-3 bg-white text-gray-700 rounded-xl shadow-neumorphic hover:shadow-neumorphic-inset transition-all duration-300 flex items-center space-x-2">
-                <SafeIcon icon={FiDownload} className="text-lg" />
-                <span>Export</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Search and Filters */}
-          <div className="bg-white rounded-2xl shadow-neumorphic p-6">
-            <div className="flex items-center space-x-4">
-              <div className="flex-1 relative">
-                <SafeIcon icon={FiSearch} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search references..."
-                  className="w-full pl-12 pr-4 py-3 bg-gray-50 rounded-xl border-none outline-none text-gray-800 placeholder-gray-500"
-                />
+          <div className="relative bg-white/10 backdrop-blur-lg rounded-3xl p-8 shadow-neumorphic-ultra border border-white/20">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-purple-600/20 rounded-3xl blur-xl"></div>
+            
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-800 via-primary-600 to-purple-600 mb-2">
+                    Reference Manager
+                  </h1>
+                  <p className="text-xl text-gray-700 font-medium">Organize and manage your research references</p>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <button className="px-6 py-3 bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded-2xl shadow-neumorphic-deep hover:shadow-neumorphic-ultra transition-all duration-300 flex items-center space-x-2 font-bold">
+                    <SafeIcon icon={FiPlus} className="text-lg" />
+                    <span>Add Reference</span>
+                  </button>
+                  <button className="px-6 py-3 bg-white/50 backdrop-blur-lg text-gray-700 rounded-2xl shadow-neumorphic-medium hover:shadow-neumorphic-deep transition-all duration-300 flex items-center space-x-2 font-bold">
+                    <SafeIcon icon={FiDownload} className="text-lg" />
+                    <span>Export</span>
+                  </button>
+                </div>
               </div>
-              <button className="px-6 py-3 bg-gray-50 text-gray-700 rounded-xl hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2">
-                <SafeIcon icon={FiFilter} className="text-lg" />
-                <span>Filter</span>
-              </button>
+
+              {/* Search and Filters */}
+              <div className="flex items-center space-x-4">
+                <div className="flex-1 relative">
+                  <SafeIcon icon={FiSearch} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search references..."
+                    className="w-full pl-12 pr-4 py-3 bg-white/50 backdrop-blur-lg rounded-2xl border border-white/30 outline-none text-gray-800 placeholder-gray-500 font-medium shadow-neumorphic-sm"
+                  />
+                </div>
+                <button className="px-6 py-3 bg-white/50 backdrop-blur-lg text-gray-700 rounded-2xl hover:bg-white/70 transition-all duration-300 flex items-center space-x-2 shadow-neumorphic-sm font-bold">
+                  <SafeIcon icon={FiFilter} className="text-lg" />
+                  <span>Filter</span>
+                </button>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -122,40 +128,57 @@ const References = () => {
             className="lg:col-span-1"
           >
             {/* Folders */}
-            <div className="bg-white rounded-2xl shadow-neumorphic p-6 mb-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-6 flex items-center space-x-2">
-                <SafeIcon icon={FiFolder} className="text-primary-500" />
-                <span>Folders</span>
-              </h3>
-              <div className="space-y-3">
-                {folders.map((folder, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-all duration-300">
-                    <div className={`w-3 h-3 rounded-full ${folder.color}`}></div>
-                    <div className="flex-1">
-                      <div className="font-medium text-gray-800">{folder.name}</div>
-                      <div className="text-sm text-gray-500">{folder.count} items</div>
+            <div className="relative bg-white/20 backdrop-blur-xl rounded-3xl p-6 mb-6 shadow-neumorphic-ultra border border-white/30">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-3xl"></div>
+              
+              <div className="relative z-10">
+                <h3 className="text-xl font-black text-gray-800 mb-6 flex items-center space-x-2">
+                  <SafeIcon icon={FiFolder} className="text-primary-500" />
+                  <span>Folders</span>
+                </h3>
+                
+                <div className="space-y-3">
+                  {folders.map((folder, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center space-x-3 p-3 rounded-xl hover:bg-white/50 cursor-pointer transition-all duration-300 group"
+                    >
+                      <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${folder.color}`}></div>
+                      <div className="flex-1">
+                        <div className="font-bold text-gray-800 group-hover:text-primary-600 transition-colors duration-300">
+                          {folder.name}
+                        </div>
+                        <div className="text-sm text-gray-500">{folder.count} items</div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-white rounded-2xl shadow-neumorphic p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-6">Quick Actions</h3>
-              <div className="space-y-3">
-                <button className="w-full flex items-center space-x-3 p-3 rounded-lg bg-gray-50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300">
-                  <SafeIcon icon={FiFileText} className="text-lg" />
-                  <span>Import from Zotero</span>
-                </button>
-                <button className="w-full flex items-center space-x-3 p-3 rounded-lg bg-gray-50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300">
-                  <SafeIcon icon={FiBookmark} className="text-lg" />
-                  <span>Import from DOI</span>
-                </button>
-                <button className="w-full flex items-center space-x-3 p-3 rounded-lg bg-gray-50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300">
-                  <SafeIcon icon={FiShare2} className="text-lg" />
-                  <span>Share Library</span>
-                </button>
+            <div className="relative bg-white/20 backdrop-blur-xl rounded-3xl p-6 shadow-neumorphic-ultra border border-white/30">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-blue-500/10 rounded-3xl"></div>
+              
+              <div className="relative z-10">
+                <h3 className="text-xl font-black text-gray-800 mb-6">Quick Actions</h3>
+                
+                <div className="space-y-3">
+                  <button className="w-full flex items-center space-x-3 p-3 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 font-bold">
+                    <SafeIcon icon={FiFileText} className="text-lg" />
+                    <span>Import from Zotero</span>
+                  </button>
+                  
+                  <button className="w-full flex items-center space-x-3 p-3 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 font-bold">
+                    <SafeIcon icon={FiBookmark} className="text-lg" />
+                    <span>Import from DOI</span>
+                  </button>
+                  
+                  <button className="w-full flex items-center space-x-3 p-3 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 font-bold">
+                    <SafeIcon icon={FiShare2} className="text-lg" />
+                    <span>Share Library</span>
+                  </button>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -168,19 +191,19 @@ const References = () => {
             className="lg:col-span-3"
           >
             {/* Tabs */}
-            <div className="bg-white rounded-2xl shadow-neumorphic p-2 mb-6">
+            <div className="relative bg-white/20 backdrop-blur-xl rounded-3xl p-3 mb-6 shadow-neumorphic-ultra border border-white/30">
               <div className="flex space-x-2">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center space-x-2 px-6 py-3 rounded-xl transition-all duration-300 ${
+                    className={`flex items-center space-x-2 px-6 py-3 rounded-2xl transition-all duration-300 font-bold ${
                       activeTab === tab.id
-                        ? 'bg-primary-500 text-white shadow-neumorphic-inset'
-                        : 'text-gray-600 hover:text-primary-500 hover:bg-gray-50'
+                        ? 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-neumorphic-deep'
+                        : 'text-gray-600 hover:text-primary-500 hover:bg-white/50'
                     }`}
                   >
-                    <span className="font-medium">{tab.label}</span>
+                    <span>{tab.label}</span>
                     <span className="text-sm opacity-75">({tab.count})</span>
                   </button>
                 ))}
@@ -190,92 +213,75 @@ const References = () => {
             {/* References List */}
             <div className="space-y-6">
               {references.map((ref, index) => (
-                <motion.div
-                  key={ref.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.1 * index }}
-                  className="relative bg-white rounded-2xl shadow-neumorphic hover:shadow-neumorphic-lg transition-all duration-300 group"
-                >
-                  {/* Encrypted Text Grain Effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 overflow-hidden rounded-2xl">
-                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-700 animate-grain">
-                      <div className="text-xs font-mono leading-3 p-2 text-white/30">
-                        {Array.from({ length: 15 }, (_, i) => (
-                          <div key={i}>
-                            {Math.random().toString(36).substring(2, 12)}
+                <div key={ref.id} className="relative group">
+                  <div className="relative bg-white/30 backdrop-blur-xl rounded-3xl shadow-neumorphic-ultra border border-white/40 hover:shadow-neumorphic-deep transition-all duration-300">
+                    <div className="relative z-10 p-8">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <h3 className="text-xl font-black text-gray-800 mb-2 group-hover:text-primary-600 transition-colors duration-300">
+                            {ref.title}
+                          </h3>
+                          <p className="text-gray-600 mb-2 font-medium">
+                            {ref.authors.join(', ')}
+                          </p>
+                          <div className="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+                            <span className="font-bold">{ref.journal}</span>
+                            <span>•</span>
+                            <span>{ref.year}</span>
+                            <span>•</span>
+                            <span className="px-2 py-1 bg-primary-50 text-primary-600 rounded-full font-bold">
+                              {ref.folder}
+                            </span>
                           </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="relative z-10 p-8">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-primary-600 transition-colors duration-300">
-                          {ref.title}
-                        </h3>
-                        <p className="text-gray-600 mb-2">
-                          {ref.authors.join(', ')}
-                        </p>
-                        <div className="flex items-center space-x-4 text-sm text-gray-500 mb-4">
-                          <span>{ref.journal}</span>
-                          <span>•</span>
-                          <span>{ref.year}</span>
-                          <span>•</span>
-                          <span className="px-2 py-1 bg-primary-50 text-primary-600 rounded-full">
-                            {ref.folder}
-                          </span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <button className="p-2 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 shadow-neumorphic-sm">
+                            <SafeIcon icon={FiEdit3} className="text-lg" />
+                          </button>
+                          <button className="p-2 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 shadow-neumorphic-sm">
+                            <SafeIcon icon={FiDownload} className="text-lg" />
+                          </button>
+                          <button className="p-2 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 shadow-neumorphic-sm">
+                            <SafeIcon icon={FiShare2} className="text-lg" />
+                          </button>
+                          <button className="p-2 rounded-xl bg-white/50 hover:bg-red-50 hover:text-red-600 transition-all duration-300 shadow-neumorphic-sm">
+                            <SafeIcon icon={FiTrash2} className="text-lg" />
+                          </button>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <button className="p-2 rounded-lg bg-gray-50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300">
-                          <SafeIcon icon={FiEdit3} className="text-lg" />
-                        </button>
-                        <button className="p-2 rounded-lg bg-gray-50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300">
-                          <SafeIcon icon={FiDownload} className="text-lg" />
-                        </button>
-                        <button className="p-2 rounded-lg bg-gray-50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300">
-                          <SafeIcon icon={FiShare2} className="text-lg" />
-                        </button>
-                        <button className="p-2 rounded-lg bg-gray-50 hover:bg-red-50 hover:text-red-600 transition-all duration-300">
-                          <SafeIcon icon={FiTrash2} className="text-lg" />
-                        </button>
+
+                      <div className="mb-4">
+                        <h4 className="font-black text-gray-800 mb-2">Citation</h4>
+                        <p className="text-gray-700 bg-white/50 rounded-xl p-3 text-sm font-mono">
+                          {ref.citation}
+                        </p>
                       </div>
-                    </div>
 
-                    <div className="mb-4">
-                      <h4 className="font-semibold text-gray-800 mb-2">Citation</h4>
-                      <p className="text-gray-700 bg-gray-50 rounded-lg p-3 text-sm font-mono">
-                        {ref.citation}
-                      </p>
-                    </div>
-
-                    <div className="mb-4">
-                      <h4 className="font-semibold text-gray-800 mb-2">Notes</h4>
-                      <p className="text-gray-700">
-                        {ref.notes}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex flex-wrap gap-2">
-                        {ref.tags.map((tag, tagIndex) => (
-                          <span
-                            key={tagIndex}
-                            className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm"
-                          >
-                            #{tag}
-                          </span>
-                        ))}
+                      <div className="mb-4">
+                        <h4 className="font-black text-gray-800 mb-2">Notes</h4>
+                        <p className="text-gray-700 font-medium">
+                          {ref.notes}
+                        </p>
                       </div>
-                      <div className="text-sm text-gray-500">
-                        DOI: {ref.doi}
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex flex-wrap gap-2">
+                          {ref.tags.map((tag, tagIndex) => (
+                            <span
+                              key={tagIndex}
+                              className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm font-bold"
+                            >
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="text-sm text-gray-500 font-bold">
+                          DOI: {ref.doi}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </motion.div>

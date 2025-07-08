@@ -41,8 +41,8 @@ export default {
         'neumorphic-inset': 'inset 8px 8px 16px #d1d9e6, inset -8px -8px 16px #ffffff',
         'neumorphic-sm': '4px 4px 8px #d1d9e6, -4px -4px 8px #ffffff',
         'neumorphic-lg': '12px 12px 24px #d1d9e6, -12px -12px 24px #ffffff',
-        'neumorphic-ultra': '20px 20px 40px #c8d4e6, -20px -20px 40px #ffffff',
-        'neumorphic-deep': '16px 16px 32px #c8d4e6, -16px -16px 32px #ffffff',
+        'neumorphic-ultra': '20px 20px 40px #c8d4e6, -20px -20px 40px #ffffff, inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
+        'neumorphic-deep': '16px 16px 32px #c8d4e6, -16px -16px 32px #ffffff, 0 0 0 1px rgba(255, 255, 255, 0.1)',
         'neumorphic-medium': '10px 10px 20px #d1d9e6, -10px -10px 20px #ffffff',
       },
       animation: {
@@ -53,6 +53,7 @@ export default {
         'grain-quantum': 'grain-quantum 10s steps(20) infinite',
         'hologram': 'hologram 4s ease-in-out infinite',
         'glow': 'glow 3s ease-in-out infinite alternate',
+        'shimmer': 'shimmer 2s ease-in-out infinite alternate',
       },
       keyframes: {
         float: {
@@ -99,6 +100,19 @@ export default {
           },
           '100%': { 
             boxShadow: '0 0 40px rgba(59, 130, 246, 0.8), 0 0 60px rgba(139, 92, 246, 0.4)',
+          },
+        },
+        shimmer: {
+          '0%': { 
+            transform: 'translateX(-100%)',
+            opacity: '0',
+          },
+          '50%': { 
+            opacity: '1',
+          },
+          '100%': { 
+            transform: 'translateX(100%)',
+            opacity: '0',
           },
         },
       },
