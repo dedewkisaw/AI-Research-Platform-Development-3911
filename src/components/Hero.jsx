@@ -118,7 +118,7 @@ const Hero = () => {
                   RESEARCH
                 </span>
               </motion.h1>
-              
+
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -137,16 +137,14 @@ const Hero = () => {
                   <SafeIcon icon={FiGlobe} className="text-white text-2xl" />
                 </div>
               </motion.div>
-              
+
               <motion.p
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
                 className="text-xl md:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed font-medium"
               >
-                Experience the future of research with our revolutionary AI that transcends traditional boundaries, 
-                analyzing quantum-level patterns across <span className="text-primary-600 font-bold">220M+ papers</span> 
-                to deliver unprecedented insights.
+                Experience the future of research with our revolutionary AI that transcends traditional boundaries, analyzing quantum-level patterns across <span className="text-primary-600 font-bold">220M+ papers</span> to deliver unprecedented insights.
               </motion.p>
             </div>
           </motion.div>
@@ -162,14 +160,13 @@ const Hero = () => {
             <div className="relative group">
               {/* Glowing Background */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 rounded-3xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
-              
+
               {/* Main Search Container */}
               <div className="relative bg-white/20 backdrop-blur-xl rounded-3xl p-3 shadow-neumorphic-ultra border border-white/30">
                 <div className="flex items-center">
                   <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-r from-primary-500 to-purple-600 rounded-2xl shadow-neumorphic-deep flex items-center justify-center ml-2">
                     <SafeIcon icon={FiSearch} className="text-white text-2xl" />
                   </div>
-                  
                   <input
                     type="text"
                     value={searchQuery}
@@ -177,7 +174,6 @@ const Hero = () => {
                     placeholder="Ask anything... AI will analyze millions of papers instantly"
                     className="flex-1 px-8 py-4 text-xl bg-transparent border-none outline-none text-gray-800 placeholder-gray-500 font-medium"
                   />
-                  
                   <motion.button
                     type="submit"
                     whileHover={{ scale: 1.05 }}
@@ -192,7 +188,7 @@ const Hero = () => {
             </div>
           </motion.form>
 
-          {/* Revolutionary Stats Grid */}
+          {/* Revolutionary Stats Grid with Raining Bubbles */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -202,50 +198,46 @@ const Hero = () => {
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
-                whileHover={{ 
-                  scale: 1.1, 
-                  rotateY: 10,
-                  z: 50 
-                }}
+                whileHover={{ scale: 1.1, rotateY: 10, z: 50 }}
                 className="relative group perspective-1000"
               >
+                {/* Slow Raining Bubbles */}
+                <div className="absolute inset-0 overflow-hidden rounded-3xl">
+                  {Array.from({ length: 8 }, (_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-2 h-2 bg-white/30 rounded-full"
+                      style={{
+                        left: `${Math.random() * 100}%`,
+                        top: '-10px',
+                      }}
+                      animate={{
+                        y: [0, 300],
+                        opacity: [0, 0.6, 0],
+                        scale: [0.5, 1.2, 0.5],
+                      }}
+                      transition={{
+                        duration: 8 + Math.random() * 4,
+                        repeat: Infinity,
+                        delay: Math.random() * 8,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  ))}
+                </div>
+
                 {/* Holographic Effect */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 rounded-3xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 {/* Main Card */}
                 <div className="relative bg-white/30 backdrop-blur-xl rounded-3xl p-8 shadow-neumorphic-ultra border border-white/40 transform-gpu">
-                  {/* Animated Background Pattern */}
-                  <div className="absolute inset-0 opacity-10 overflow-hidden rounded-3xl">
-                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-700 animate-grain-slow">
-                      <div className="text-xs font-mono leading-3 p-4 text-white/50">
-                        {Array.from({ length: 15 }, (_, i) => (
-                          <div key={i}>
-                            {Math.random().toString(36).substring(2, 12)}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  
                   <div className="relative z-10">
                     <div className={`w-16 h-16 bg-gradient-to-r ${stat.color} rounded-2xl shadow-neumorphic-deep flex items-center justify-center mb-6 mx-auto group-hover:shadow-neumorphic-ultra transition-all duration-300`}>
                       <SafeIcon icon={stat.icon} className="text-white text-2xl" />
                     </div>
-                    
-                    <motion.div
-                      className="text-4xl font-black text-gray-800 mb-2"
-                      animate={{
-                        scale: [1, 1.1, 1],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        delay: index * 0.5,
-                      }}
-                    >
+                    <div className="text-4xl font-black text-gray-800 mb-2">
                       {stat.value}
-                    </motion.div>
-                    
+                    </div>
                     <div className="text-gray-600 font-semibold text-lg">{stat.label}</div>
                   </div>
                 </div>
@@ -262,7 +254,6 @@ const Hero = () => {
           >
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur-xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 animate-pulse"></div>
-              
               <div className="relative bg-white/20 backdrop-blur-xl rounded-3xl p-8 shadow-neumorphic-ultra border border-white/30">
                 <h3 className="text-3xl font-bold text-gray-800 mb-4">
                   Enter the Quantum Research Dimension
@@ -270,7 +261,6 @@ const Hero = () => {
                 <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
                   Join the revolution. Transform your research workflow with AI that thinks beyond human limitations.
                 </p>
-                
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
