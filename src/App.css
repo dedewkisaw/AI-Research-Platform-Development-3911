@@ -1,0 +1,229 @@
+.app-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 50%, #cbd5e1 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message {
+  font-size: 1.1rem;
+  color: #374151;
+}
+
+/* Revolutionary Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  border-radius: 10px;
+  border: 2px solid #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+}
+
+/* Quantum Transitions */
+* {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Revolutionary Grain Animations */
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+@keyframes grain-quantum {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  10% { transform: translate(-3%, -7%) rotate(36deg); }
+  20% { transform: translate(-10%, 3%) rotate(72deg); }
+  30% { transform: translate(5%, -15%) rotate(108deg); }
+  40% { transform: translate(-3%, 20%) rotate(144deg); }
+  50% { transform: translate(-10%, 7%) rotate(180deg); }
+  60% { transform: translate(10%, -2%) rotate(216deg); }
+  70% { transform: translate(2%, 10%) rotate(252deg); }
+  80% { transform: translate(2%, 25%) rotate(288deg); }
+  90% { transform: translate(-7%, 7%) rotate(324deg); }
+}
+
+/* Supreme Neumorphic Shadows */
+.shadow-neumorphic {
+  box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+}
+
+.shadow-neumorphic-inset {
+  box-shadow: inset 8px 8px 16px #d1d9e6, inset -8px -8px 16px #ffffff;
+}
+
+.shadow-neumorphic-sm {
+  box-shadow: 4px 4px 8px #d1d9e6, -4px -4px 8px #ffffff;
+}
+
+.shadow-neumorphic-lg {
+  box-shadow: 12px 12px 24px #d1d9e6, -12px -12px 24px #ffffff;
+}
+
+.shadow-neumorphic-ultra {
+  box-shadow: 
+    20px 20px 40px #c8d4e6, 
+    -20px -20px 40px #ffffff,
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.shadow-neumorphic-deep {
+  box-shadow: 
+    16px 16px 32px #c8d4e6, 
+    -16px -16px 32px #ffffff,
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.shadow-neumorphic-medium {
+  box-shadow: 
+    10px 10px 20px #d1d9e6, 
+    -10px -10px 20px #ffffff;
+}
+
+/* Quantum Floating Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Holographic Effects */
+@keyframes hologram {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1) rotateY(0deg);
+  }
+  50% { 
+    opacity: 0.8;
+    transform: scale(1.05) rotateY(180deg);
+  }
+}
+
+.animate-hologram {
+  animation: hologram 4s ease-in-out infinite;
+}
+
+/* Glow Effects */
+@keyframes glow {
+  0% { 
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+  100% { 
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.8), 0 0 60px rgba(139, 92, 246, 0.4);
+  }
+}
+
+.animate-glow {
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+/* Grain texture animations */
+.animate-grain {
+  animation: grain 8s steps(10) infinite;
+}
+
+.animate-grain-slow {
+  animation: grain 12s steps(15) infinite;
+}
+
+.animate-grain-quantum {
+  animation: grain-quantum 10s steps(20) infinite;
+}
+
+/* 3D Perspective */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-gpu {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Quantum Focus Styles */
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  box-shadow: 
+    0 0 0 3px rgba(59, 130, 246, 0.1),
+    0 0 20px rgba(59, 130, 246, 0.3),
+    8px 8px 16px #d1d9e6, 
+    -8px -8px 16px #ffffff;
+}
+
+/* Revolutionary Responsive Typography */
+@media (max-width: 768px) {
+  .text-5xl { font-size: 2.5rem; }
+  .text-6xl { font-size: 3rem; }
+  .text-7xl { font-size: 3.5rem; }
+  .text-8xl { font-size: 4rem; }
+  .text-4xl { font-size: 2rem; }
+  .text-3xl { font-size: 1.5rem; }
+}
+
+/* Quantum Backdrop Blur */
+.backdrop-blur-quantum {
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Holographic Text */
+.text-holographic {
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6, #10b981, #f59e0b);
+  background-size: 300% 300%;
+  animation: gradient-shift 4s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Quantum Particle Effects */
+.quantum-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: radial-gradient(circle, #3b82f6, transparent);
+  border-radius: 50%;
+  animation: quantum-float 6s ease-in-out infinite;
+}
+
+@keyframes quantum-float {
+  0%, 100% { 
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0.3;
+  }
+  33% { 
+    transform: translateY(-100px) translateX(50px) scale(1.5);
+    opacity: 0.8;
+  }
+  66% { 
+    transform: translateY(-50px) translateX(-30px) scale(0.8);
+    opacity: 0.6;
+  }
+}
