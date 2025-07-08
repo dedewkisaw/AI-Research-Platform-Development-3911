@@ -4,12 +4,73 @@ import { motion } from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 
-const { FiSearch, FiFilter, FiDownload, FiBookmark, FiExternalLink, FiClock, FiTrendingUp } = FiIcons;
+const { FiSearch, FiFilter, FiDownload, FiBookmark, FiExternalLink, FiClock, FiTrendingUp, FiX } = FiIcons;
 
 const SearchResults = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('q') || '');
-  const [filters, setFilters] = useState({ year: '', journal: '', author: '', citations: '' });
+  const [filters, setFilters] = useState({
+    year: '',
+    journal: '',
+    author: '',
+    citations: ''
+  });
+  const [bookmarkedPapers, setBookmarkedPapers] = useState(new Set());
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (query.trim()) {
+      setIsSearching(true);
+      setSearchParams({ q: query });
+      // Simulate search delay
+      setTimeout(() => {
+        setIsSearching(false);
+      }, 1000);
+    }
+  };
+
+  const handleFilterChange = (filterType, value) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: value
+    }));
+  };
+
+  const handleApplyFilters = () => {
+    // Apply filters logic here
+    console.log('Applying filters:', filters);
+  };
+
+  const handleClearFilters = () => {
+    setFilters({
+      year: '',
+      journal: '',
+      author: '',
+      citations: ''
+    });
+  };
+
+  const handleBookmark = (paperId) => {
+    setBookmarkedPapers(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(paperId)) {
+        newSet.delete(paperId);
+      } else {
+        newSet.add(paperId);
+      }
+      return newSet;
+    });
+  };
+
+  const handleDownload = (paper) => {
+    // Simulate download
+    alert(`Downloading: ${paper.title}`);
+  };
+
+  const handleExternalLink = (doi) => {
+    window.open(`https://doi.org/${doi}`, '_blank');
+  };
 
   const mockResults = [
     {
@@ -62,9 +123,8 @@ const SearchResults = () => {
         >
           <div className="relative bg-white/20 backdrop-blur-xl rounded-3xl p-6 shadow-neumorphic-ultra border border-white/30">
             <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-purple-600/20 rounded-3xl blur-xl"></div>
-            
             <div className="relative z-10">
-              <div className="flex items-center space-x-4">
+              <form onSubmit={handleSearch} className="flex items-center space-x-4">
                 <div className="flex-1 relative">
                   <SafeIcon icon={FiSearch} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
                   <input
@@ -75,10 +135,14 @@ const SearchResults = () => {
                     className="w-full pl-12 pr-4 py-4 bg-white/50 backdrop-blur-lg rounded-2xl border border-white/30 outline-none text-gray-800 placeholder-gray-500 font-medium shadow-neumorphic-sm"
                   />
                 </div>
-                <button className="px-8 py-4 bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded-2xl shadow-neumorphic-deep hover:shadow-neumorphic-ultra transition-all duration-300 font-bold">
-                  Search
+                <button
+                  type="submit"
+                  disabled={isSearching}
+                  className="px-8 py-4 bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded-2xl shadow-neumorphic-deep hover:shadow-neumorphic-ultra transition-all duration-300 font-bold disabled:opacity-50"
+                >
+                  {isSearching ? 'Searching...' : 'Search'}
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         </motion.div>
@@ -93,47 +157,71 @@ const SearchResults = () => {
           >
             <div className="relative bg-white/20 backdrop-blur-xl rounded-3xl p-6 shadow-neumorphic-ultra border border-white/30 sticky top-24">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-3xl"></div>
-              
               <div className="relative z-10">
-                <h3 className="text-xl font-black text-gray-800 mb-6 flex items-center space-x-2">
-                  <SafeIcon icon={FiFilter} className="text-primary-500" />
-                  <span>Filters</span>
-                </h3>
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-black text-gray-800 flex items-center space-x-2">
+                    <SafeIcon icon={FiFilter} className="text-primary-500" />
+                    <span>Filters</span>
+                  </h3>
+                  {(filters.year || filters.journal || filters.author || filters.citations) && (
+                    <button
+                      onClick={handleClearFilters}
+                      className="text-gray-500 hover:text-red-500 transition-colors duration-300"
+                    >
+                      <SafeIcon icon={FiX} className="text-lg" />
+                    </button>
+                  )}
+                </div>
                 
                 <div className="space-y-6">
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Publication Year</label>
-                    <select className="w-full p-3 bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 outline-none text-gray-800 shadow-neumorphic-sm">
-                      <option>Any year</option>
-                      <option>2024</option>
-                      <option>2023</option>
-                      <option>2022</option>
-                      <option>2021</option>
+                    <select
+                      value={filters.year}
+                      onChange={(e) => handleFilterChange('year', e.target.value)}
+                      className="w-full p-3 bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 outline-none text-gray-800 shadow-neumorphic-sm"
+                    >
+                      <option value="">Any year</option>
+                      <option value="2024">2024</option>
+                      <option value="2023">2023</option>
+                      <option value="2022">2022</option>
+                      <option value="2021">2021</option>
                     </select>
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Journal</label>
-                    <select className="w-full p-3 bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 outline-none text-gray-800 shadow-neumorphic-sm">
-                      <option>Any journal</option>
-                      <option>Nature</option>
-                      <option>Science</option>
-                      <option>Cell</option>
-                      <option>PNAS</option>
+                    <select
+                      value={filters.journal}
+                      onChange={(e) => handleFilterChange('journal', e.target.value)}
+                      className="w-full p-3 bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 outline-none text-gray-800 shadow-neumorphic-sm"
+                    >
+                      <option value="">Any journal</option>
+                      <option value="Nature">Nature</option>
+                      <option value="Science">Science</option>
+                      <option value="Cell">Cell</option>
+                      <option value="PNAS">PNAS</option>
                     </select>
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Citations</label>
-                    <select className="w-full p-3 bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 outline-none text-gray-800 shadow-neumorphic-sm">
-                      <option>Any citations</option>
-                      <option>100+</option>
-                      <option>50+</option>
-                      <option>10+</option>
+                    <select
+                      value={filters.citations}
+                      onChange={(e) => handleFilterChange('citations', e.target.value)}
+                      className="w-full p-3 bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 outline-none text-gray-800 shadow-neumorphic-sm"
+                    >
+                      <option value="">Any citations</option>
+                      <option value="100+">100+</option>
+                      <option value="50+">50+</option>
+                      <option value="10+">10+</option>
                     </select>
                   </div>
-                  
-                  <button className="w-full py-3 bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded-xl shadow-neumorphic-deep hover:shadow-neumorphic-ultra transition-all duration-300 font-bold">
+
+                  <button
+                    onClick={handleApplyFilters}
+                    className="w-full py-3 bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded-xl shadow-neumorphic-deep hover:shadow-neumorphic-ultra transition-all duration-300 font-bold"
+                  >
                     Apply Filters
                   </button>
                 </div>
@@ -185,13 +273,26 @@ const SearchResults = () => {
                           </div>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <button className="p-2 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 shadow-neumorphic-sm">
+                          <button
+                            onClick={() => handleBookmark(paper.id)}
+                            className={`p-2 rounded-xl transition-all duration-300 shadow-neumorphic-sm ${
+                              bookmarkedPapers.has(paper.id)
+                                ? 'bg-primary-100 text-primary-600'
+                                : 'bg-white/50 hover:bg-primary-50 hover:text-primary-600'
+                            }`}
+                          >
                             <SafeIcon icon={FiBookmark} className="text-lg" />
                           </button>
-                          <button className="p-2 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 shadow-neumorphic-sm">
+                          <button
+                            onClick={() => handleDownload(paper)}
+                            className="p-2 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 shadow-neumorphic-sm"
+                          >
                             <SafeIcon icon={FiDownload} className="text-lg" />
                           </button>
-                          <button className="p-2 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 shadow-neumorphic-sm">
+                          <button
+                            onClick={() => handleExternalLink(paper.doi)}
+                            className="p-2 rounded-xl bg-white/50 hover:bg-primary-50 hover:text-primary-600 transition-all duration-300 shadow-neumorphic-sm"
+                          >
                             <SafeIcon icon={FiExternalLink} className="text-lg" />
                           </button>
                         </div>
@@ -231,7 +332,10 @@ const SearchResults = () => {
 
             {/* Load More */}
             <div className="text-center mt-12">
-              <button className="px-8 py-4 bg-white/50 backdrop-blur-lg text-gray-700 rounded-2xl shadow-neumorphic-medium hover:shadow-neumorphic-deep transition-all duration-300 font-bold">
+              <button
+                onClick={() => alert('Loading more results...')}
+                className="px-8 py-4 bg-white/50 backdrop-blur-lg text-gray-700 rounded-2xl shadow-neumorphic-medium hover:shadow-neumorphic-deep transition-all duration-300 font-bold"
+              >
                 Load More Results
               </button>
             </div>

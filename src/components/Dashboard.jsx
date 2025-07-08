@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import SafeIcon from '../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 
-const { FiSearch, FiBookOpen, FiEdit3, FiZap, FiSend, FiMessageCircle, FiCpu, FiLayers, FiBookmark, FiTrendingUp } = FiIcons;
+const { FiSearch, FiBookOpen, FiEdit3, FiZap, FiSend, FiMessageCircle, FiCpu, FiLayers, FiBookmark, FiTrendingUp, FiDownload, FiShare2, FiPlus } = FiIcons;
 
 const Dashboard = () => {
   const [chatInput, setChatInput] = useState('');
@@ -15,6 +15,7 @@ const Dashboard = () => {
       timestamp: new Date().toLocaleTimeString()
     }
   ]);
+  const [isTyping, setIsTyping] = useState(false);
   const navigate = useNavigate();
 
   const handleChatSubmit = (e) => {
@@ -27,6 +28,8 @@ const Dashboard = () => {
         timestamp: new Date().toLocaleTimeString()
       }]);
 
+      setIsTyping(true);
+      
       // Simulate AI response
       setTimeout(() => {
         setChatMessages(prev => [...prev, {
@@ -34,10 +37,64 @@ const Dashboard = () => {
           content: `I'll help you research "${chatInput}". Let me analyze the latest papers and provide comprehensive insights. Would you like me to search for specific papers or generate a literature review?`,
           timestamp: new Date().toLocaleTimeString()
         }]);
+        setIsTyping(false);
       }, 1000);
-
+      
       setChatInput('');
     }
+  };
+
+  const handleAIWriting = () => {
+    alert('AI Writing Assistant - Coming Soon! This feature will help you generate academic content with automatic citations.');
+  };
+
+  const handleQuickInsights = () => {
+    setChatMessages(prev => [...prev, {
+      type: 'ai',
+      content: 'Here are some quick insights from recent research trends: 1) AI in healthcare is growing 300% annually, 2) Quantum computing papers increased by 150% this year, 3) Climate change research is focusing on adaptation strategies.',
+      timestamp: new Date().toLocaleTimeString()
+    }]);
+  };
+
+  const handleExportData = () => {
+    // Create mock data for export
+    const exportData = {
+      stats: stats,
+      recentActivity: [
+        'AI analysis completed - Processed 1,247 papers on quantum computing',
+        'New insights generated - Machine learning breakthrough detected',
+        'References updated - 12 new papers added to library'
+      ],
+      timestamp: new Date().toISOString()
+    };
+    
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = 'research-dashboard-export.json';
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+  };
+
+  const handleShareDashboard = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: 'Quantum Research Dashboard',
+        text: 'Check out my research dashboard with AI-powered insights!',
+        url: window.location.href
+      });
+    } else {
+      // Fallback for browsers that don't support Web Share API
+      navigator.clipboard.writeText(window.location.href);
+      alert('Dashboard link copied to clipboard!');
+    }
+  };
+
+  const handleAddReference = () => {
+    navigate('/references');
   };
 
   const quickActions = [
@@ -59,14 +116,14 @@ const Dashboard = () => {
       icon: FiEdit3,
       title: 'AI Writing',
       description: 'Generate research content',
-      action: () => {},
+      action: handleAIWriting,
       gradient: 'from-green-500 to-emerald-500'
     },
     {
       icon: FiZap,
       title: 'Quick Insights',
       description: 'Get instant analysis',
-      action: () => {},
+      action: handleQuickInsights,
       gradient: 'from-orange-500 to-red-500'
     }
   ];
@@ -90,14 +147,33 @@ const Dashboard = () => {
         >
           <div className="relative bg-white/10 backdrop-blur-lg rounded-3xl p-8 shadow-neumorphic-ultra border border-white/20">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-xl"></div>
-            
             <div className="relative z-10">
-              <h1 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-800 via-primary-600 to-purple-600 mb-4">
-                QUANTUM DASHBOARD
-              </h1>
-              <p className="text-xl text-gray-700 font-medium">
-                Your AI research command center - Chat with our quantum AI to explore infinite research possibilities
-              </p>
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h1 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-800 via-primary-600 to-purple-600 mb-4">
+                    QUANTUM DASHBOARD
+                  </h1>
+                  <p className="text-xl text-gray-700 font-medium">
+                    Your AI research command center - Chat with our quantum AI to explore infinite research possibilities
+                  </p>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={handleExportData}
+                    className="px-4 py-2 bg-white/50 backdrop-blur-lg text-gray-700 rounded-xl hover:bg-white/70 transition-all duration-300 flex items-center space-x-2 shadow-neumorphic-sm font-bold"
+                  >
+                    <SafeIcon icon={FiDownload} className="text-lg" />
+                    <span>Export</span>
+                  </button>
+                  <button
+                    onClick={handleShareDashboard}
+                    className="px-4 py-2 bg-white/50 backdrop-blur-lg text-gray-700 rounded-xl hover:bg-white/70 transition-all duration-300 flex items-center space-x-2 shadow-neumorphic-sm font-bold"
+                  >
+                    <SafeIcon icon={FiShare2} className="text-lg" />
+                    <span>Share</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -134,7 +210,6 @@ const Dashboard = () => {
           >
             <div className="relative bg-white/20 backdrop-blur-xl rounded-3xl shadow-neumorphic-ultra border border-white/30 h-[600px] flex flex-col">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-3xl"></div>
-              
               <div className="relative z-10 flex-1 flex flex-col">
                 {/* Chat Header */}
                 <div className="p-6 border-b border-white/20">
@@ -152,10 +227,7 @@ const Dashboard = () => {
                 {/* Chat Messages */}
                 <div className="flex-1 p-6 overflow-y-auto space-y-4">
                   {chatMessages.map((message, index) => (
-                    <div
-                      key={index}
-                      className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
+                    <div key={index} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                       <div className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${
                         message.type === 'user' 
                           ? 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-neumorphic-deep' 
@@ -168,6 +240,17 @@ const Dashboard = () => {
                       </div>
                     </div>
                   ))}
+                  {isTyping && (
+                    <div className="flex justify-start">
+                      <div className="bg-white/50 text-gray-800 shadow-neumorphic-medium px-4 py-3 rounded-2xl">
+                        <div className="flex space-x-1">
+                          <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
+                          <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                          <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Chat Input */}
@@ -205,10 +288,16 @@ const Dashboard = () => {
           >
             <div className="relative bg-white/20 backdrop-blur-xl rounded-3xl p-6 shadow-neumorphic-ultra border border-white/30">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-3xl"></div>
-              
               <div className="relative z-10">
-                <h3 className="text-2xl font-black text-gray-800 mb-6">Quick Actions</h3>
-                
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-black text-gray-800">Quick Actions</h3>
+                  <button
+                    onClick={handleAddReference}
+                    className="p-2 bg-white/50 hover:bg-primary-50 hover:text-primary-600 rounded-xl transition-all duration-300 shadow-neumorphic-sm"
+                  >
+                    <SafeIcon icon={FiPlus} className="text-lg" />
+                  </button>
+                </div>
                 <div className="space-y-4">
                   {quickActions.map((action, index) => (
                     <button
@@ -235,10 +324,8 @@ const Dashboard = () => {
 
             <div className="relative bg-white/20 backdrop-blur-xl rounded-3xl p-6 shadow-neumorphic-ultra border border-white/30">
               <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-blue-500/10 rounded-3xl"></div>
-              
               <div className="relative z-10">
                 <h3 className="text-2xl font-black text-gray-800 mb-6">Recent Activity</h3>
-                
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4">
                     <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
@@ -247,7 +334,6 @@ const Dashboard = () => {
                       <p className="text-xs text-gray-500">Processed 1,247 papers on quantum computing</p>
                     </div>
                   </div>
-                  
                   <div className="flex items-center space-x-4">
                     <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
                     <div>
@@ -255,7 +341,6 @@ const Dashboard = () => {
                       <p className="text-xs text-gray-500">Machine learning breakthrough detected</p>
                     </div>
                   </div>
-                  
                   <div className="flex items-center space-x-4">
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                     <div>

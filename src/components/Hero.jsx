@@ -9,13 +9,27 @@ const { FiSearch, FiArrowRight, FiBookOpen, FiUsers, FiTrendingUp, FiZap, FiCpu,
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeOrb, setActiveOrb] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+      setIsLoading(true);
+      // Simulate search loading
+      setTimeout(() => {
+        navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+        setIsLoading(false);
+      }, 500);
     }
+  };
+
+  const handleStartQuantumResearch = () => {
+    navigate('/dashboard');
+  };
+
+  const handleStartFreeTrial = () => {
+    navigate('/dashboard');
   };
 
   const stats = [
@@ -178,10 +192,17 @@ const Hero = () => {
                     type="submit"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-8 py-4 bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 text-white rounded-2xl shadow-neumorphic-deep hover:shadow-neumorphic-ultra transition-all duration-300 flex items-center space-x-3 mr-2"
+                    disabled={isLoading}
+                    className="px-8 py-4 bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 text-white rounded-2xl shadow-neumorphic-deep hover:shadow-neumorphic-ultra transition-all duration-300 flex items-center space-x-3 mr-2 disabled:opacity-50"
                   >
-                    <span className="font-bold text-lg">SEARCH</span>
-                    <SafeIcon icon={FiArrowRight} className="text-xl" />
+                    {isLoading ? (
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    ) : (
+                      <>
+                        <span className="font-bold text-lg">SEARCH</span>
+                        <SafeIcon icon={FiArrowRight} className="text-xl" />
+                      </>
+                    )}
                   </motion.button>
                 </div>
               </div>
@@ -264,6 +285,7 @@ const Hero = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={handleStartQuantumResearch}
                   className="px-12 py-4 bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 text-white rounded-2xl shadow-neumorphic-deep hover:shadow-neumorphic-ultra transition-all duration-300 font-bold text-xl"
                 >
                   START QUANTUM RESEARCH
